@@ -19,6 +19,9 @@ textarea {
 
     padding: 0;
     margin: 0;
+
+
+    color: white;
 }
 
 textarea:focus {
@@ -54,19 +57,16 @@ textarea:focus {
     text-align: end;
 }
 
-.past {
+.past > .textarea-container {
     background-color: #d3d3d3;
-    color: white;
 }
 
-.present {
+.present > .textarea-container {
     background-color: #ff6961;
-    color: white;
 }
 
-.future {
+.future > .textarea-container {
     background-color: #77dd77;
-    color: white;
 }
 
 .save-button {
