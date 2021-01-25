@@ -52,6 +52,8 @@ function setStorage(storage) {
 
 /* END LocalStorage helpers */
 
+
+
 const times = [
     '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm',
 ];
@@ -98,10 +100,6 @@ function appendScheduleElementsToDOM() {
 
 function getScheduleElements() {
     const eles = [];
-
-    // const times = [
-    //     '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm',
-    // ];
 
     // Starting hour value (9am)
     let hour = 9;
@@ -196,13 +194,10 @@ function bindSaveFuncs(storage, scheduleElements) {
         const saveButtonEle = scheduleElements[i].saveButtonEle;
         const textareaEle = scheduleElements[i].textareaEle;
 
-        console.log(saveButtonEle);
-
         saveButtonEle.click(() => {
             storage[i] = textareaEle.val() || '';
 
             setStorage(storage);
-            console.log(storage);
 
             addAlert('Schedule has been updated!', 'success');
         });

@@ -20,7 +20,6 @@ textarea {
     padding: 0;
     margin: 0;
 
-
     color: white;
 }
 
@@ -30,19 +29,10 @@ textarea:focus {
 
 .jumbotron {
     text-align: center;
-    background-color: transparent;
-    color: black;
-    border-radius: 0;
-    border-bottom: 10px solid black;
-}
-
-.description {
-    white-space: pre-wrap;
-}
-
-.time-block {
-    text-align: center;
-    border-radius: 15px;
+    background-color: black;
+    color: white;
+    /* border-radius: 0; */
+    box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12)
 }
 
 .row {
@@ -84,7 +74,7 @@ textarea:focus {
 
     font-size: 20px;
 
-    transition: all 200ms ease-out;
+    transition: background-color 200ms ease-out;
 }
 
 .save-button:hover, i:hover {
@@ -98,12 +88,18 @@ textarea:focus {
     justify-content: center;
     font-family: 'Control One', sans-serif;
     font-size: 2em;
+
+    color: #06AED5;
 }
 
 /* Additional styles */
 
 .row:focus-within > .hour {
     text-decoration: underline;
+}
+
+.textarea-container {
+    transition: all 200ms ease-out;
 }
 
 .past:focus-within > .textarea-container {
@@ -131,19 +127,23 @@ textarea:focus {
 @keyframes fadeIn {
     from {
         opacity: 0;
+        transform: translateX(-50%) scale(0);
     }
   
     to {
         opacity: 1;
+        transform: translateX(-50%) scale(1);
     }
 }
 @keyframes fadeOut {
     from {
         opacity: 1;
+        transform: translateX(-50%) scale(1);
     }
   
     to {
         opacity: 0;
+        transform: translateX(-50%) scale(0);
     }
 }
 
@@ -162,10 +162,13 @@ textarea:focus {
 
     animation-name: fadeIn;
     animation-duration: 200ms;
+    animation-timing-function: ease-out;
 }
 .alert.fade-out {
     animation-name: fadeOut;
     animation-duration: 200ms;
+    animation-timing-function: ease-out;
+
     opacity: 0;
 }
 
