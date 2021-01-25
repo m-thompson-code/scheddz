@@ -84,11 +84,11 @@ textarea:focus {
 
     font-size: 20px;
 
-    transition: all .3s linear;
+    transition: all 200ms ease-out;
 }
 
 .save-button:hover, i:hover {
-    font-size: 25px;
+    font-size: 24px;
 }
 
 #currentDay {
@@ -98,10 +98,4 @@ textarea:focus {
     justify-content: center;
     font-family: 'Control One', sans-serif;
     font-size: 2em;
-}
-
-.test {
-    width: 100%;
-    height: 100px;
-    background: grey;
 }

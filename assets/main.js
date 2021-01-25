@@ -1,6 +1,78 @@
 'use strict';
 
-let hour = 0;
+/* main function that updates the ui over time */
+
+function tick() {
+    const now = moment();
+
+    const newCurrentHour = now.hours();
+
+    if (newCurrentHour !== currentHour) {
+        currentHour = now.hours();
+        updateRowClasses(currentHour);
+    }
+
+    updateClockText(now);   
+}
+
+/* END main function that updates the ui over time */
+
+
+
+/* LocalStorage helpers */
+
+function getStorage() {
+    const serializedValue = localStorage.getItem('storage') || '';
+
+    try {
+        return JSON.parse(serializedValue);
+    } catch(error) {
+        return ['Click here to update schedule'];
+    }
+}
+
+function setStorage() {
+    const serializedValue = JSON.stringify(storage);
+
+    localStorage.setItem('storage', serializedValue);
+}
+
+/* END LocalStorage helpers */
+
+
+
+/* Getting reference to elements */
+
+function getScheduleElements() {
+    const eles = [];
+
+    const times = [
+        '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm',
+    ];
+
+    let hour = 9;
+
+    for (let i = 0; i < times.length; i++) {
+        const time = times[i];
+
+        eles.push({
+            rowEle: $(`#row-${time}`),
+            textareaEle: $(`#textarea-${time}`),
+            saveButtonEle: $(`#save-button-${time}`),
+            hour: hour,
+        });
+
+        hour += 1;
+    }
+
+    return eles;
+}
+
+/* END Getting reference to elements */
+
+
+
+/* Handle clock text */
 
 function updateClockText (now) {
     const currentDayEle = document.getElementById('currentDay');
@@ -8,59 +80,11 @@ function updateClockText (now) {
     currentDayEle.textContent = now.format("dddd, MMMM Do YYYY, h:mm:ss A");
 }
 
-function tick() {
-    const now = moment();
+/* END Handle clock text */
 
-    updateClockText(now);   
-}
 
-setInterval(tick, 1000);
 
-tick();
-
-const rowMap = [
-    {
-        rowEle: $('#hour-9am'),
-        hour: 9,
-    },
-    {
-        rowEle: $('#hour-10am'),
-        hour: 10,
-    },
-    {
-        rowEle: $('#hour-11am'),
-        hour: 11,
-    },
-    {
-        rowEle: $('#hour-12pm'),
-        hour: 12,
-    },
-    {
-        rowEle: $('#hour-1pm'),
-        hour: 13,
-    },
-    {
-        rowEle: $('#hour-2pm'),
-        hour: 14,
-    },
-    {
-        rowEle: $('#hour-3pm'),
-        hour: 15,
-    },
-    {
-        rowEle: $('#hour-4pm'),
-        hour: 16,
-    },
-    {
-        rowEle: $('#hour-5pm'),
-        hour: 17,
-    },
-];
-
-console.log(rowMap);
-
-const currentHour = moment().hours();
-console.log(currentHour);
+/* Past, present, future class helpers */
 
 function removeClasses(ele) {
     ele.removeClass('past');
@@ -83,15 +107,47 @@ function addFutureClass(ele) {
     ele.addClass('future');
 }
 
-for (let i = 0; i < rowMap.length; i++) {
-    const ele = rowMap[i].rowEle;
-    const hour = rowMap[i].hour;
+/* End Past, present, future class helpers */
 
-    if (hour < currentHour) {
-        addPastClass(ele);
-    } else if (hour === currentHour) {
-        addPresentClass(ele);
-    } else {
-        addFutureClass(ele);
+/* Updating row classes for past, present, future */
+
+function updateRowClasses(currentHour) {
+    for (let i = 0; i < scheduleElements.length; i++) {
+        const ele = scheduleElements[i].rowEle;
+        const hour = scheduleElements[i].hour;
+    
+        if (hour < currentHour) {
+            addPastClass(ele);
+        } else if (hour === currentHour) {
+            addPresentClass(ele);
+        } else {
+            addFutureClass(ele);
+        }
     }
 }
+
+/* END Updating row classes for past, present, future */
+
+
+
+let currentHour;
+
+const storage = getStorage();
+
+const scheduleElements = getScheduleElements();
+
+console.log(scheduleElements);
+
+
+// function bindSaveFunc(textarea, saveButton) {
+//     saveButton.onclick = () => {
+
+//     }
+// }
+
+
+
+
+setInterval(tick, 1000);
+
+tick();
