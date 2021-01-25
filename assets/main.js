@@ -24,14 +24,16 @@ function tick() {
 function getStorage() {
     const serializedValue = localStorage.getItem('storage') || '';
 
+    // If JSON.parse fails (like when passing an empty string), let's return an array with a default text value
     try {
         return JSON.parse(serializedValue);
     } catch(error) {
-        return ['Click here to update schedule'];
+        // console.error(error);
+        return ['Update the text for 9am here'];
     }
 }
 
-function setStorage() {
+function setStorage(storage) {
     const serializedValue = JSON.stringify(storage);
 
     localStorage.setItem('storage', serializedValue);
@@ -50,6 +52,7 @@ function getScheduleElements() {
         '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm',
     ];
 
+    // Starting hour value (9am)
     let hour = 9;
 
     for (let i = 0; i < times.length; i++) {
@@ -75,9 +78,9 @@ function getScheduleElements() {
 /* Handle clock text */
 
 function updateClockText (now) {
-    const currentDayEle = document.getElementById('currentDay');
+    const currentDayEle = $('#currentDay');
 
-    currentDayEle.textContent = now.format("dddd, MMMM Do YYYY, h:mm:ss A");
+    currentDayEle.text(now.format("dddd, MMMM Do YYYY, h:mm:ss A"));
 }
 
 /* END Handle clock text */
@@ -128,26 +131,52 @@ function updateRowClasses(currentHour) {
 
 /* END Updating row classes for past, present, future */
 
+/* Getting and saving text for textareas */
+
+function setTextareaTexts(source, scheduleElements) {
+    for (let i = 0; i < scheduleElements.length; i++) {
+        const textareaEle = scheduleElements[i].textareaEle;
+        textareaEle.val(source[i] || '');
+    }
+}
+
+function bindSaveFuncs(storage, scheduleElements) {
+    for (let i = 0; i < scheduleElements.length; i++) {
+        const saveButtonEle = scheduleElements[i].saveButtonEle;
+        const textareaEle = scheduleElements[i].textareaEle;
+
+        console.log(saveButtonEle);
+
+        saveButtonEle.click(() => {
+            storage[i] = textareaEle.val() || '';
+
+            setStorage(storage);
+            console.log(storage);
+        });
+    }
+}
+
+/* END Getting and saving text for textareas */
 
 
+
+// Store the current hour (used to update the past, present, future classes on the row divs)
 let currentHour;
 
+// Get storage from LocalStorage
 const storage = getStorage();
 
+// Get jQuery reference to elements
 const scheduleElements = getScheduleElements();
 
-console.log(scheduleElements);
+// Set the text of all the textareas from storage
+setTextareaTexts(storage, scheduleElements);
 
+// Bind save functions to save buttons
+bindSaveFuncs(storage, scheduleElements);
 
-// function bindSaveFunc(textarea, saveButton) {
-//     saveButton.onclick = () => {
-
-//     }
-// }
-
-
-
-
+// Call tick ever second
 setInterval(tick, 1000);
 
+// Call tick asap to update ui asap
 tick();
