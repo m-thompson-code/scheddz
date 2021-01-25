@@ -178,11 +178,47 @@ function bindSaveFuncs(storage, scheduleElements) {
 
             setStorage(storage);
             console.log(storage);
+
+            addAlert('Schedule has been updated!', 'success');
         });
     }
 }
 
 /* END Getting and saving text for textareas */
+
+
+
+/* Managing alerts */
+
+let alertTimeout;
+
+function removeAlerts() {
+    clearTimeout(alertTimeout);
+    $( ".alert" ).each(function () {
+        $(this).remove();
+    });
+}
+
+function addAlert(message, type) {
+    // div class="alert alert-success" role="alert">...</div>
+    $('body').append(`<div class="alert alert-${type} role="alert">${message}</div`);
+
+    alertTimeout = setTimeout(() => {
+        fadeAlertsOut();
+    }, 2000);
+}
+
+function fadeAlertsOut() {
+    $( ".alert" ).each(function () {
+        $(this).addClass('fade-out');
+    });
+
+    alertTimeout = setTimeout(() => {
+        removeAlerts();
+    }, 400);
+}
+
+/* END Managing alerts */
 
 
 

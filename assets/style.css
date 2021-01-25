@@ -127,3 +127,48 @@ textarea:focus {
 .save-button:active {
     background-color: #39e1ff;
 }
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+  
+    to {
+        opacity: 1;
+    }
+}
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+  
+    to {
+        opacity: 0;
+    }
+}
+
+.alert {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 20px);
+    z-index: 1;
+    max-width: 600px;
+    padding: 10px;
+    box-sizing: border-box;
+
+    pointer-events: none;
+
+    animation-name: fadeIn;
+    animation-duration: 200ms;
+}
+.alert.fade-out {
+    animation-name: fadeOut;
+    animation-duration: 200ms;
+    opacity: 0;
+}
+
+.container {
+    margin-bottom: 90px;
+}
