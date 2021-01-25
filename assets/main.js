@@ -2,7 +2,6 @@
 
 /* main function that updates the ui over time */
 
-
 // Manipulate now to start at Sun Jan 24 2021 12:59:55 GMT-0800
 const fixedStartMoment = moment(`Sun Jan 24 2021 12:59:55 GMT-0800`);
 const fixedNow = moment();

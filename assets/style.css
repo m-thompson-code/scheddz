@@ -47,6 +47,10 @@ textarea:focus {
     text-align: end;
 }
 
+.textarea-container {
+    border-left: 1px solid #000000;
+}
+
 .past > .textarea-container {
     background-color: #d3d3d3;
 }
