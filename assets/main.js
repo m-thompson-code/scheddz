@@ -41,6 +41,30 @@ function setStorage(storage) {
 
 /* END LocalStorage helpers */
 
+const times = [
+    '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm',
+];
+
+/* Appending elements to dom */
+
+function appendScheduleElementsToDOM() {
+    for (let i = 0; i < times.length; i++) {
+        const time = times[i];
+
+        const row = `<div id="row-${time}" class="row">
+            <div class="col-md-1 hour">${time}</div>
+            <div class="col-md-10 textarea-container">
+                <textarea id="textarea-${time}"></textarea>
+            </div>
+            <div id="save-button-${time}" class="col-md-1 save-button"><i class="fa fa-save"></i></div>
+        </div>`;
+
+        $('#schedule-container').append(row);
+    }
+}
+
+/* END Appending elements to dom */
+
 
 
 /* Getting reference to elements */
@@ -48,9 +72,9 @@ function setStorage(storage) {
 function getScheduleElements() {
     const eles = [];
 
-    const times = [
-        '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm',
-    ];
+    // const times = [
+    //     '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm',
+    // ];
 
     // Starting hour value (9am)
     let hour = 9;
@@ -166,7 +190,10 @@ let currentHour;
 // Get storage from LocalStorage
 const storage = getStorage();
 
-// Get jQuery reference to elements
+// Append schedule elements
+appendScheduleElementsToDOM();
+
+// Get jQuery reference to schedule elements to set textarea texts and bind save functions to save buttons
 const scheduleElements = getScheduleElements();
 
 // Set the text of all the textareas from storage
