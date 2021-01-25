@@ -99,3 +99,31 @@ textarea:focus {
     font-family: 'Control One', sans-serif;
     font-size: 2em;
 }
+
+/* Additional styles */
+
+.row:focus-within > .hour {
+    text-decoration: underline;
+}
+
+.past:focus-within > .textarea-container {
+    background-color: #bababa;
+}
+.present:focus-within > .textarea-container {
+    background-color: #ff6961;
+}
+.future:focus-within > .textarea-container {
+    background-color: #5ec45e;
+}
+.save-button {
+    outline: none;
+}
+.save-button:focus {
+    background-color: #0095bc;
+}
+.save-button:hover {
+    background-color: #20c8ef;
+}
+.save-button:active {
+    background-color: #39e1ff;
+}

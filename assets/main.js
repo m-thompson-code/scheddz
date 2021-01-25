@@ -51,12 +51,14 @@ function appendScheduleElementsToDOM() {
     for (let i = 0; i < times.length; i++) {
         const time = times[i];
 
+        // tabindex="0"
+
         const row = `<div id="row-${time}" class="row">
             <div class="col-md-1 hour">${time}</div>
             <div class="col-md-10 textarea-container">
                 <textarea id="textarea-${time}"></textarea>
             </div>
-            <div id="save-button-${time}" class="col-md-1 save-button"><i class="fa fa-save"></i></div>
+            <div tabindex="0" id="save-button-${time}" class="col-md-1 save-button"><i class="fa fa-save"></i></div>
         </div>`;
 
         $('#schedule-container').append(row);
