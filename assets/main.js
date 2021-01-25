@@ -2,8 +2,19 @@
 
 /* main function that updates the ui over time */
 
+
+// Manipulate now to start at Sun Jan 24 2021 12:59:55 GMT-0800
+const fixedStartMoment = moment(`Sun Jan 24 2021 12:59:55 GMT-0800`);
+const fixedNow = moment();
+
+function getNow() {
+    // return moment();
+
+    return moment().subtract(fixedNow.diff(fixedStartMoment));
+}
+
 function tick() {
-    const now = moment();
+    const now = getNow();
 
     const newCurrentHour = now.hours();
 
@@ -51,10 +62,24 @@ function appendScheduleElementsToDOM() {
     for (let i = 0; i < times.length; i++) {
         const time = times[i];
 
-        // tabindex="0"
+        // const row = `<div id="row-${time}" class="row">
+        //     <div class="col-md-1 hour">${time}</div>
+        //     <div class="col-md-10 textarea-container">
+        //         <textarea id="textarea-${time}"></textarea>
+        //     </div>
+        //     <div id="save-button-${time}" class="col-md-1 save-button"><i class="fa fa-save"></i></div>
+        // </div>`;
+
+        // const row = `<div id="row-${time}" class="row">
+        //     <div class="col-md-1 hour">${time}</div>
+        //     <div class="col-md-10 textarea-container">
+        //         <textarea id="textarea-${time}"></textarea>
+        //     </div>
+        //     <div tabindex="0" id="save-button-${time}" class="col-md-1 save-button"><i class="fa fa-save"></i></div>
+        // </div>`;
 
         const row = `<div id="row-${time}" class="row">
-            <div class="col-md-1 hour">${time}</div>
+            <label class="col-md-1 hour" for="textarea-${time}">${time}</label>
             <div class="col-md-10 textarea-container">
                 <textarea id="textarea-${time}"></textarea>
             </div>
@@ -194,13 +219,15 @@ let alertTimeout;
 
 function removeAlerts() {
     clearTimeout(alertTimeout);
+
     $( ".alert" ).each(function () {
         $(this).remove();
     });
 }
 
 function addAlert(message, type) {
-    // div class="alert alert-success" role="alert">...</div>
+    removeAlerts();
+
     $('body').append(`<div class="alert alert-${type} role="alert">${message}</div`);
 
     alertTimeout = setTimeout(() => {
@@ -212,6 +239,8 @@ function fadeAlertsOut() {
     $( ".alert" ).each(function () {
         $(this).addClass('fade-out');
     });
+
+    clearTimeout(alertTimeout);
 
     alertTimeout = setTimeout(() => {
         removeAlerts();

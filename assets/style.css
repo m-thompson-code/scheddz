@@ -110,7 +110,7 @@ textarea:focus {
     background-color: #bababa;
 }
 .present:focus-within > .textarea-container {
-    background-color: #ff6961;
+    background-color: #e65048;
 }
 .future:focus-within > .textarea-container {
     background-color: #5ec45e;
@@ -171,4 +171,8 @@ textarea:focus {
 
 .container {
     margin-bottom: 90px;
+}
+
+.hour {
+    cursor: pointer;
 }
